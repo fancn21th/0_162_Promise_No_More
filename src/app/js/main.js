@@ -16,14 +16,9 @@ const getFirmTitles = (films) => {
 
 render();
 
-fetch(`${API_URL}fil2ms`)
-  .then((response) => {
-    if (!response.ok) {
-      // return Promise.reject("Unsuccessful response");  // no stack trace in browser console
-      return Promise.reject(new Error("Unsuccessful response"));
-    }
-
-    return response.json().then((films) => render(getFirmTitles(films)));
+Promise.resolve($.getJSON(`${API_URL}films`))
+  .then((films) => {
+    render(getFirmTitles(films));
   })
   .catch((error) => {
     console.warn(error);
