@@ -14,7 +14,39 @@ const getFirmTitles = (films) => {
 render();
 
 fetch(`${API_URL}films`)
-  .then((response) => response.json())
-  .then((films) => {
-    render(getFirmTitles(films));
+  .then((response) => {
+    return Promise.reject("invalid json").then((films) =>
+      render(getFirmTitles(films))
+    );
+  })
+  .catch((error) => {
+    console.warn(error);
+    render(":(");
   });
+
+// Promise Chain 末端处理 错误
+// fetch(`${API_URL}films`)
+//   .then((response) => {
+//     return Promise.reject("invalid json").then((films) =>
+//       render(getFirmTitles(films))
+//     );
+//   })
+//   .then(undefined, (error) => {
+//     console.warn(error);
+//     render(":(");
+//   });
+
+// 一个 Promise Settled 状态组 下 2种不同状态的回掉
+// fetch(`${API_URL}films`).then(
+//   // onFulfilled
+//   (response) => console.log(response),
+//   // onRejected
+//   (error) => console.error(error)
+// );
+
+// 正常场景
+// fetch(`${API_URL}films`)
+//   .then((response) => response.json())
+//   .then((films) => {
+//     render(getFirmTitles(films));
+//   });
