@@ -19,7 +19,7 @@ render();
 fetch(`${API_URL}fil2ms`)
   .then((response) => {
     if (!response.ok) {
-      // return Promise.reject("Unsuccessful response");
+      // return Promise.reject("Unsuccessful response");  // no stack trace in browser console
       return Promise.reject(new Error("Unsuccessful response"));
     }
 
@@ -28,6 +28,7 @@ fetch(`${API_URL}fil2ms`)
   .catch((error) => {
     console.warn(error);
     render(":(");
+    return [];
   })
   .finally(() => {
     loading.remove();
