@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "gulp"
+    "start": "gulp",
+    "start:node": "gtime -f '%e' node ./node/index.js"
   },
   "keywords": [],
   "author": "",
