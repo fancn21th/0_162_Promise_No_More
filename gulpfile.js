@@ -40,7 +40,11 @@ function copyAppJs(cb) {
   return src("./src/**/app/**/*.js").pipe(dest(buildPath));
 }
 
-const copyTasks = [copyAppJs, copyAppCss];
+function copyAppImg(cb) {
+  return src("./src/**/app/**/*.gif").pipe(dest(buildPath));
+}
+
+const copyTasks = [copyAppJs, copyAppCss, copyAppImg];
 
 // BUILD TASK
 const build = series(clean, parallel(...copyTasks), index);
