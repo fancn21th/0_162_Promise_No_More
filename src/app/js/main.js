@@ -13,10 +13,16 @@ const getFirmTitles = (films) => {
     .join("\n");
 };
 //#endregion
+
 render();
 
-fetch(`${API_URL}films`)
+fetch(`${API_URL}fil2ms`)
   .then((response) => {
+    if (!response.ok) {
+      // return Promise.reject("Unsuccessful response");
+      return Promise.reject(new Error("Unsuccessful response"));
+    }
+
     return response.json().then((films) => render(getFirmTitles(films)));
   })
   .catch((error) => {
@@ -27,47 +33,3 @@ fetch(`${API_URL}films`)
     loading.remove();
   })
   .then((films) => console.log(films));
-
-// fetch(`${API_URL}films`)
-//   .then((response) => {
-//     return response.json().then((films) => render(getFirmTitles(films)));
-//   })
-//   .catch((error) => {
-//     console.warn(error);
-//     render(":(");
-//   })
-//   .then(
-//     () => {
-//       loading.remove();
-//     },
-//     () => {
-//       loading.remove();
-//     }
-//   );
-
-// Promise Chain 末端处理 错误
-// fetch(`${API_URL}films`)
-//   .then((response) => {
-//     return Promise.reject("invalid json").then((films) =>
-//       render(getFirmTitles(films))
-//     );
-//   })
-//   .then(undefined, (error) => {
-//     console.warn(error);
-//     render(":(");
-//   });
-
-// 一个 Promise Settled 状态组 下 2种不同状态的回掉
-// fetch(`${API_URL}films`).then(
-//   // onFulfilled
-//   (response) => console.log(response),
-//   // onRejected
-//   (error) => console.error(error)
-// );
-
-// 正常场景
-// fetch(`${API_URL}films`)
-//   .then((response) => response.json())
-//   .then((films) => {
-//     render(getFirmTitles(films));
-//   });
