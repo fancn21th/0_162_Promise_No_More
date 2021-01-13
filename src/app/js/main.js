@@ -65,18 +65,18 @@ const waitForLogin = (loopInterval = 100) => {
 };
 
 // 模拟 远程 API 调用
-const fetch = (url, time = 100) => {
-  if (Math.random() < 0.5) {
-    return sleep(time).then(() => resMap[url]);
+const fetch = (url, duration = 100) => {
+  if (Math.random() < 0.9) {
+    return sleep(duration).then(() => resMap[url]);
   } else {
     return Promise.reject(new Error("ooops!"));
   }
 };
 
 // 封装请求
-const request = ({ url, time }) => {
+const request = ({ url, duration }) => {
   function doRequest() {
-    return fetch(url, time)
+    return fetch(url, duration)
       .then((res) => {
         if (Math.random() < 0.5) {
           console.log("token 过期");
@@ -114,21 +114,21 @@ const task = (params) => {
 const pageOnLoad = async () => {
   task({
     url: "foo",
-    time: 1000,
+    duration: 1000,
   }).then((res) => {
     console.log(res);
   });
 
   task({
     url: "bar",
-    time: 2000,
+    duration: 2000,
   }).then((res) => {
     console.log(res);
   });
 
   task({
     url: "baz",
-    time: 3000,
+    duration: 3000,
   }).then((res) => {
     console.log(res);
   });
