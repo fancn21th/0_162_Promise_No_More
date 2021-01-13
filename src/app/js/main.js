@@ -134,6 +134,7 @@ const pageOnLoad = async () => {
   });
 };
 
+// 页面初始化
 updateState("isLogin", false);
 updateState("isLoginInProgress", false);
 pageOnLoad();
