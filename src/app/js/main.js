@@ -1,6 +1,7 @@
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
-//#region
+//#region 全局状态
+
 const state = {
   isLogin: null,
   isLoginInProgress: null,
@@ -18,6 +19,8 @@ const getState = (key) => {
 
 //#endregion
 
+//#region 模拟 API 返回 根据不同的 URL
+
 const resMap = {
   foo: {
     foo: "hello foo",
@@ -32,6 +35,8 @@ const resMap = {
     token: "1234567890",
   },
 };
+
+//#endregion
 
 // 登录
 const login = (loginDelayTime = 100) => {
@@ -59,10 +64,9 @@ const waitForLogin = (loopInterval = 100) => {
   });
 };
 
-// 模拟 远程 API
-
+// 模拟 远程 API 调用
 const fetch = (url, time = 100) => {
-  if (Math.random() < 1) {
+  if (Math.random() < 0.5) {
     return sleep(time).then(() => resMap[url]);
   } else {
     return Promise.reject(new Error("ooops!"));
@@ -102,28 +106,27 @@ const request = ({ url, time }) => {
 };
 
 // API 任务
-
-const task1 = (params) => {
+const task = (params) => {
   return request(params);
 };
 
 // 页面加载
 const pageOnLoad = async () => {
-  task1({
+  task({
     url: "foo",
     time: 1000,
   }).then((res) => {
     console.log(res);
   });
 
-  task1({
+  task({
     url: "bar",
     time: 2000,
   }).then((res) => {
     console.log(res);
   });
 
-  task1({
+  task({
     url: "baz",
     time: 3000,
   }).then((res) => {
